@@ -1,1 +1,3 @@
-﻿  Connecté-Client.vcxproj -> C:\Users\casto\OneDrive - USherbrooke\Sherbrooke\S3\App 3\Code des programme\App-3\Mode Connecté\Client\Connecté-Client\Debug\Connecté-Client.exe
+﻿  sockets clientConnecte_incomplet.c
+c:\users\casto\onedrive - usherbrooke\sherbrooke\s3\app 3\code des programme\app-3\source code\programmes modeconnecteincomplets\sockets client\sockets clientconnecte_incomplet.c(21): warning C4101: 'sock': unreferenced local variable
+  Connecté-Client.vcxproj -> C:\Users\casto\OneDrive - USherbrooke\Sherbrooke\S3\App 3\Code des programme\App-3\Mode Connecté\Client\Connecté-Client\Debug\Connecté-Client.exe

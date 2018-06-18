@@ -11,7 +11,7 @@
 #include <winsock.h>
 
 #define BUFFER_LENGTH  1025
-#define TEXT_LENGH	   1025
+#define TEXT_LENGHT	   1025
 #define END_OF_STRING  '\0'
 
 #pragma comment(lib, "Ws2_32.lib")
@@ -24,11 +24,11 @@ main(argc, argv)  int argc; char *argv[];
 	char buf[BUFFER_LENGTH];
 	int len;
 	int rval;
-	char text[TEXT_LENGH]="Bonjour";
+	char text[TEXT_LENGHT]="Bonjour";
 
 	WSADATA wsadata;
 	WORD version = (1 << 8) + 1;  /* Version 1.1 */
-	LPWSADATA lpwsadata = 0;
+	
 
 
 	if (argc != 1)
@@ -37,13 +37,22 @@ main(argc, argv)  int argc; char *argv[];
 	}
 
 	/*  A faire: initialisation de Winsock */
+	
+	rval = WSAStartup(version, &wsadata);
 
-	WSAStartup(version, lpwsadata);
-
+	if (rval != 0) {
+		perror("Erreur initialisation de Winsock");
+		exit(1);
+	}
 	/*  A faire: Création d'un socket de communication  */
 	SOCKET s;
-	s = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-	bind(s, &server, TEXT_LENGH);
+	s = socket(AF_INET, SOCK_STREAM, 0);
+
+	rval = bind(s, (struct sockaddr *)&server, TEXT_LENGHT);
+
+	if (rval == 0) {
+		perror("Erreur initialisation du socket");
+	}
 	
 	server.sin_family = AF_INET;  
 	printf("Entrer le nom de la machine distante: "); 
@@ -60,11 +69,11 @@ main(argc, argv)  int argc; char *argv[];
 	
     /*  A faire: connection au serveur  */
 
-	connect(s, &server, TEXT_LENGH);
+	connect(s, (struct sockaddr *)&server, TEXT_LENGHT);
 	
 	len = strlen(text);
 	if (len == 0)  {
-	if (0)
+	if (s == 0)
 		{	perror("lors de l'ecriture dans le socket");
 			exit(1);
 		}
