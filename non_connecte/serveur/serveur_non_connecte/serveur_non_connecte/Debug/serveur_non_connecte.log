@@ -1,0 +1,3 @@
+﻿  SocketServeurNonConnecte.c
+d:\documents\github\app-3\non_connecte\serveur\socketserveurnonconnecte.c(17): warning C4101: 'length' : variable locale non référencée
+  serveur_non_connecte.vcxproj -> D:\Documents\GitHub\App-3\non_connecte\serveur\serveur_non_connecte\Debug\serveur_non_connecte.exe
