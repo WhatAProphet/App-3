@@ -82,25 +82,30 @@ char *argv[];
    FILE *fptr;
    int sendbuflen = BUFFER_LENGTH;
    char *sendbuf[BUFFER_LENGTH];
-   ByteReceived = recvfrom(ReceivingSocket, ReceiveBuf, BUFFER_LENGTH, 0,
+   ByteReceived = recvfrom(ReceivingSocket, ReceiveBuf, sizeof(ReceiveBuf), 0,
 	   (struct sockaddr *)&SenderAddr, &SenderAddrSize);
    fptr = fopen(ReceiveBuf, "wb");
    printf("Fichier cree au nom de: %s\n", ReceiveBuf);
-		ByteReceived = recvfrom(ReceivingSocket, ReceiveBuf, BUFFER_LENGTH, 0,
-						(struct sockaddr *)&SenderAddr, &SenderAddrSize);
-		byteReceivedCount += ByteReceived;
-		if ( ByteReceived > 0 )
-		{
-			printf("Serveur: Nombre de bytes recus: %d\n", ByteReceived);
-			printf("Serveur: Les donnees sont \"%s\"\n", ReceiveBuf);
-			fprintf(fptr, ReceiveBuf);
-		}
-		else if (ByteReceived == 0)
-		{
-			printf("Connection done");
-		}
-		else 
-			printf("Serveur: recvfrom() non reussi avec code: %d\n", WSAGetLastError());
+   while (ByteReceived > 0)
+   {
+	   ByteReceived = recvfrom(ReceivingSocket, ReceiveBuf, sizeof(ReceiveBuf), 0,
+		   (struct sockaddr *)&SenderAddr, &SenderAddrSize);
+	   byteReceivedCount += ByteReceived;
+	   if (ByteReceived > 0)
+	   {
+		   printf("Serveur: Nombre de bytes recus: %d\n", ByteReceived);
+		   fwrite(ReceiveBuf, BUFFER_LENGTH, 1, fptr);
+		   Sleep(3);
+		   //sendto(ReceivingSocket, (const char *)answer, strlen(answer), 0, (struct sockaddr *)&SenderAddr, SenderAddrSize);
+	   }
+	   else if (ByteReceived == 0)
+	   {
+		   printf("Connection done");
+	   }
+	   else
+		   printf("Serveur: recvfrom() non reussi avec code: %d\n", WSAGetLastError());
+   }
+   
    fclose(fptr);
    
  

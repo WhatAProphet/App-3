@@ -1,6 +1,4 @@
 ﻿  SocketClientNonConnecte.c
-d:\documents\github\app-3\non_connecte\client\socketclientnonconnecte.c(42): warning C4244: '=' : conversion de 'SOCKET' en 'int', perte possible de données
-d:\documents\github\app-3\non_connecte\client\socketclientnonconnecte.c(52): warning C4013: 'gets' non défini(e) ; extern retournant int pris par défaut
-d:\documents\github\app-3\non_connecte\client\socketclientnonconnecte.c(66): warning C4101: 'n' : variable locale non référencée
-d:\documents\github\app-3\non_connecte\client\socketclientnonconnecte.c(22): warning C4101: 'buffer' : variable locale non référencée
+d:\documents\github\app-3\non_connecte\client\socketclientnonconnecte.c(39): warning C4244: '=' : conversion de 'SOCKET' en 'int', perte possible de données
+d:\documents\github\app-3\non_connecte\client\socketclientnonconnecte.c(49): warning C4013: 'gets' non défini(e) ; extern retournant int pris par défaut
   client_non_connecte.vcxproj -> D:\Documents\GitHub\App-3\non_connecte\client\client_non_connecte\x64\Debug\client_non_connecte.exe
