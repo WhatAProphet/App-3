@@ -1,0 +1,4 @@
+﻿  sockets clientConnecte_incomplet.c
+d:\documents\github\app-3\source code\programmes modeconnecteincomplets\sockets client\sockets clientconnecte_incomplet.c(74): warning C4267: '=' : conversion de 'size_t' en 'int', perte possible de données
+d:\documents\github\app-3\source code\programmes modeconnecteincomplets\sockets client\sockets clientconnecte_incomplet.c(21): warning C4101: 'sock' : variable locale non référencée
+  Connecté-Client.vcxproj -> D:\Documents\GitHub\App-3\Mode Connecté\Client\Connecté-Client\x64\Debug\Connecté-Client.exe

@@ -8,11 +8,14 @@
 
 #pragma comment(lib, "Ws2_32.lib")
 
+void FileReceive(char* recvbuf, int recvbuflen);
+
 int main(argc, argv)
 int argc;
 char *argv[];
 {
      WSADATA		wsaData;
+	 char           *answer = "Server got data";
      int			ReceivingSocket;
 	 int			length;
 	 struct sockaddr_in	ReceiverAddr;
@@ -75,15 +78,33 @@ char *argv[];
    printf("Server: pret a recevoir...\n");
  
    // ????????????????
-   ByteReceived = recvfrom(ReceivingSocket, ReceiveBuf, BUFFER_LENGTH, 0,
-				(struct sockaddr *)&SenderAddr, &SenderAddrSize);
- if ( ByteReceived > 0 )
-	{
-     printf("Serveur: Nombre de bytes recus: %d\n", ByteReceived);
-     printf("Serveur: Les donnees sont \"%s\"\n", ReceiveBuf);
-	}
- else 
-    printf("Serveur: recvfrom() non reussi avec code: %d\n", WSAGetLastError());
+   FILE *fptr;
+   int sendbuflen = 1024;
+   char *sendbuf[1024];
+   char *fileName = "testServer.txt";
+   fptr = fopen(fileName, "w+");
+   while (1) {
+		ByteReceived = recvfrom(ReceivingSocket, ReceiveBuf, BUFFER_LENGTH, 0,
+						(struct sockaddr *)&SenderAddr, &SenderAddrSize);
+		ReceiveBuf[ByteReceived] = '\0';
+		if ( ByteReceived > 0 )
+		{
+			printf("Serveur: Nombre de bytes recus: %d\n", ByteReceived);
+			printf("Serveur: Les donnees sont \"%s\"\n", ReceiveBuf);
+			fprintf(fptr, ReceiveBuf);
+			sendto(ReceivingSocket, (const char *)answer, strlen(answer),
+				1, (const struct sockaddr *)&SenderAddr, SenderAddrSize);			
+		}
+		else if (ByteReceived == 0)
+		{
+			printf("Connection done");
+			break;
+		}
+		else 
+			printf("Serveur: recvfrom() non reussi avec code: %d\n", WSAGetLastError());
+   }
+   fclose(fptr);
+   
  
  // ????????????????
  getpeername(ReceivingSocket, (SOCKADDR *)&SenderAddr, &SenderAddrSize);
@@ -98,4 +119,21 @@ char *argv[];
 
 WSACleanup(); 
 return 0;
+}
+
+
+void FileReceive(char* recvbuf, int recvbuflen)
+{
+	FILE *fptr;
+	int sendbuflen = 1024;
+	char *sendbuf[1024];
+	char *fileName = "testServer.txt";
+	fptr = fopen_s(&fptr, fileName, "wb");
+	ZeroMemory(&sendbuf, sendbuflen);
+	if (fptr != NULL)
+	{
+		fprintf(fptr, recvbuf);
+		ZeroMemory(&recvbuf, recvbuflen);
+	}
+	fclose(fptr);
 }

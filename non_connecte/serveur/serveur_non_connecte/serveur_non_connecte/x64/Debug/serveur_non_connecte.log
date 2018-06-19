@@ -1,1 +1,7 @@
-﻿  serveur_non_connecte.vcxproj -> D:\Documents\GitHub\App-3\non_connecte\serveur\serveur_non_connecte\x64\Debug\serveur_non_connecte.exe
+﻿  SocketServeurNonConnecte.c
+d:\documents\github\app-3\non_connecte\serveur\socketserveurnonconnecte.c(44): warning C4244: '=' : conversion de 'SOCKET' en 'int', perte possible de données
+d:\documents\github\app-3\non_connecte\serveur\socketserveurnonconnecte.c(95): warning C4267: 'fonction' : conversion de 'size_t' en 'int', perte possible de données
+d:\documents\github\app-3\non_connecte\serveur\socketserveurnonconnecte.c(83): warning C4101: 'sendbuf' : variable locale non référencée
+d:\documents\github\app-3\non_connecte\serveur\socketserveurnonconnecte.c(20): warning C4101: 'length' : variable locale non référencée
+d:\documents\github\app-3\non_connecte\serveur\socketserveurnonconnecte.c(131): warning C4047: '=' : les niveaux d'indirection de 'FILE *' et de 'errno_t' sont différents
+  serveur_non_connecte.vcxproj -> D:\Documents\GitHub\App-3\non_connecte\serveur\serveur_non_connecte\x64\Debug\serveur_non_connecte.exe
