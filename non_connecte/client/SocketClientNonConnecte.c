@@ -8,7 +8,6 @@
 
 #pragma comment(lib, "Ws2_32.lib")
 
-void FileSend(SOCKET FileSendSocket, char *FilePath);
 void delay(int milliseconds);
 
 main(argc, argv)  int argc; char *argv[];
@@ -20,6 +19,7 @@ main(argc, argv)  int argc; char *argv[];
 	 struct hostent		  *hp;
      char                 *SendBuf = "Bonjour!Terre appelle Mars!";
 	 char				  buf[BUFFER_LENGTH];
+	 char                 buffer[BUFFER_LENGTH];
 	 char                 *filePath = "test.txt";
      int len;
      int TotalByteSent;
@@ -61,27 +61,26 @@ main(argc, argv)  int argc; char *argv[];
 	 gets(buf);
 	 ReceiverAddr.sin_port = htons((short)atoi(buf)); /*?????????????????????*/
 
-	 char fileName[1024], fileContent[1024];
+	 char fileName[BUFFER_LENGTH], fileContent[BUFFER_LENGTH];
 	 FILE *file;
 	 int n;
 	 while (1)
 	 {
 		 printf("\nVeuillez entrer le nom du fichier: ");
 		 scanf("%s", fileName);
-		 file = fopen(fileName, "r");
+		 file = fopen(fileName, "rb");
 		 if (file != NULL)
 		 {
+			 TotalByteSent = sendto(SendingSocket, fileName, BUFFER_LENGTH, 0,
+				 (struct sockaddr *)&ReceiverAddr, sizeof(ReceiverAddr));
 			 printf("\nLe contenu du fichier sera imprime");
 			 while (!feof(file)) {
-				 fgets(fileContent, 1024, file);
-				 //printf("%s\n", fileContent);
-				 TotalByteSent = sendto(SendingSocket, fileContent, strlen(fileContent), 0,
+				 fgets(fileContent, BUFFER_LENGTH, file);
+				 printf("%s\n", fileContent);
+				 TotalByteSent = sendto(SendingSocket, fileContent, BUFFER_LENGTH, 0,
 					 (struct sockaddr *)&ReceiverAddr, sizeof(ReceiverAddr));
 				 countByteSent += TotalByteSent;
-				 n = recvfrom(SendingSocket, (char *)SendBuf, BUFFER_LENGTH, 1,
-					 (struct sockaddr *)&ReceiverAddr, &len);
-				 SendBuf[n] = '\0';
-			 }
+			}
 			 fclose(file);
 			 break;
 		 }
@@ -123,34 +122,6 @@ main(argc, argv)  int argc; char *argv[];
 	return 0;
 }
 
-void FileSend(SOCKET FileSendSocket, char *FilePath)
-{
-	FILE *fptr;
-	int sendbuflen = 1024;
-	char *sendbuf[1024];
-	fptr = fopen_s(&fptr, FilePath, "r");
-	ZeroMemory(&sendbuf, sendbuflen);
-
-	if (fptr != NULL)
-	{
-		while (1)
-		{
-			fscanf_s(fptr, "%s", sendbuf);
-			if (sendbuf == EOF)
-			{
-				printf("End of File sending from Client\n");
-				fclose(fptr);
-				break;
-			}
-			else
-			{
-				send(FileSendSocket, sendbuf, sendbuflen, 0);
-				ZeroMemory(&sendbuf, sendbuflen);
-			}
-		}
-	}
-
-}
 
 void delay(int milliseconds)
 {

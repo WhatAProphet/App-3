@@ -1,5 +1,5 @@
 ﻿  Sockets serverConnecte.c
-d:\documents\github\app-3\source code\programmes modeconnecteincomplets\sockets server\sockets serverconnecte.c(48): warning C4244: '=' : conversion de 'SOCKET' en 'int', perte possible de données
-d:\documents\github\app-3\source code\programmes modeconnecteincomplets\sockets server\sockets serverconnecte.c(81): warning C4244: '=' : conversion de 'SOCKET' en 'int', perte possible de données
-d:\documents\github\app-3\source code\programmes modeconnecteincomplets\sockets server\sockets serverconnecte.c(107): warning C4267: '=' : conversion de 'size_t' en 'int', perte possible de données
+d:\documents\github\app-3\source code\programmes modeconnecteincomplets\sockets server\sockets serverconnecte.c(52): warning C4244: '=' : conversion de 'SOCKET' en 'int', perte possible de données
+d:\documents\github\app-3\source code\programmes modeconnecteincomplets\sockets server\sockets serverconnecte.c(85): warning C4244: '=' : conversion de 'SOCKET' en 'int', perte possible de données
+d:\documents\github\app-3\source code\programmes modeconnecteincomplets\sockets server\sockets serverconnecte.c(123): warning C4267: '=' : conversion de 'size_t' en 'int', perte possible de données
   Connecté-Serveur.vcxproj -> D:\Documents\GitHub\App-3\Mode Connecté\Serveur\Connecté-Serveur\x64\Debug\Connecté-Serveur.exe
