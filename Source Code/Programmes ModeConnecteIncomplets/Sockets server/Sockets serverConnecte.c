@@ -23,6 +23,7 @@ char *argv[];
 	int length;
 	int rval;
 	char buf[BUFFER_LENGTH];
+	char content[BUFFER_LENGTH];
 	struct sockaddr_in server;
 	struct sockaddr_in client;
 	struct hostent *cname;
@@ -30,6 +31,9 @@ char *argv[];
 
 	WSADATA wsadata;
 	WORD version = (1 << 8) + 1;  /* Version 1.1 de WINSOCK*/
+
+	FILE* data = 0;
+	
 
 	if (argc > 2)
 	{	fprintf(stderr,"Usage: %s [portnumber]\n", argv[0]);
@@ -94,35 +98,46 @@ char *argv[];
 
 		/*  ???? Indiquer quelle opération on effectue ici????? */
 		else do  /*?????????????????????*/
-		{	if ((rval = recv(msgsock, buf, sizeof(buf), 0)) < 0)
+		{	
+			printf("Reception de données...\n");
+			
+			if ((rval = recv(msgsock, buf, sizeof(buf), 0)) < 0)
 			{	perror("lors de la lecture du message");
 			}
 			if (rval == 0)
 				printf("Fin de connection\n\n");
 			else
-			{	buf[rval] = END_OF_STRING;
-				printf("Recu: '%s'\n", buf);
+			{	
+				//buf[rval-1] = END_OF_STRING;
+				printf("Nom du fichier recu: '%s'\n", buf);
+				data = fopen(buf, "w+");
+				rval = rval = recv(msgsock, content, sizeof(content),0);
+				content[0] = ' ';
+				printf("Contenu du fichier recu: '%s'\n", content);
+				
+				fprintf(data, "%s", content);
+				
 				printf("Entrer les caracteres+retour de chariot pour envoyer, ou juste retour de chariot pour terminer:\n ");
 				gets_s(buf, BUFFER_LENGTH);
+				
 				length = strlen(buf);
-				if (length == 0)  break;
+				
+				if (length == 0) {
+					rval = length;
+				}
 				if (send(msgsock, buf, length, 0) < 0) /*?????????????????????*/
 					{	perror("lors de l'ecriture dans le socket");
 						exit(1);
 					}
+				
 			}
+			
 		} while (rval != 0);
-
-		recvfrom(sock, buf, BUFFER_LENGTH, 0,
-			(struct sockaddr *)&client, sizeof(client));
-		closesocket(msgsock); /*?????????????????????*/
-		FILE* data = 0;
-		data = fopen("ReceivedData.txt", "w+");
-		fprintf(data, buf);
-
-
+		break;
 	} 
-
+	
+	printf("Fin de connection\n");
+	fclose(data);
 	closesocket(sock); /*?????????????????????*/
 	WSACleanup(); /*?????????????????????*/
 
