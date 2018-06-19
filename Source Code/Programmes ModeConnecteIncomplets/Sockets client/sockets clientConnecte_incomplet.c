@@ -19,22 +19,39 @@
 main(argc, argv)  int argc; char *argv[];
 
 {	int sock;
+	FILE *data_write = 0;
+	FILE *data_read = 0;
 	struct sockaddr_in server;
 	struct hostent *hp;
 	char buf[BUFFER_LENGTH];
+	char filename[TEXT_LENGHT];
 	int len;
 	int rval;
+	int n = 0;
 	char text[TEXT_LENGHT]="Bonjour";
 
 	WSADATA wsadata;
 	WORD version = (1 << 8) + 1;  /* Version 1.1 */
 	
-
-
+	
+	
+	
 	if (argc != 1)
 	{	fprintf(stderr,"%s manque d'arguments\n", argv[0]);
 		exit(1);
 	}
+
+	printf("Entrer le nom du fichier a envoyer: ");
+	gets_s(filename, TEXT_LENGHT);
+	data_read = fopen(filename, "r+");
+	if (data_read == NULL) {
+		perror("Erreur lors de la lecture du fichier");
+	}
+	while (!feof(data_read)) {
+		fgets(text, BUFFER_LENGTH, data_read);
+	}
+	printf("Texte envoyer: %s\n", text);
+	fclose(data_read);
 
 	/*  A faire: initialisation de Winsock */
 	
@@ -78,9 +95,14 @@ main(argc, argv)  int argc; char *argv[];
 			exit(1);
 		}
 	}
+	send(s, filename, sizeof(filename),0);
+	send(s, text, sizeof(text), 0);
+	printf("\nText sent = %s\n", text);
+
 
 	/*  A faire: Fermeture de socket  */
 	closesocket(s);
+	
 	/*  A faire: Terminaison de winsock  */
 	WSACleanup();
 	return 0;
