@@ -113,8 +113,12 @@ char *argv[];
 			}
 		} while (rval != 0);
 
-
+		recvfrom(sock, buf, BUFFER_LENGTH, 0,
+			(struct sockaddr *)&client, sizeof(client));
 		closesocket(msgsock); /*?????????????????????*/
+		FILE* data = 0;
+		data = fopen("ReceivedData.txt", "w+");
+		fprintf(data, buf);
 
 
 	} 

@@ -19,6 +19,7 @@
 main(argc, argv)  int argc; char *argv[];
 
 {	int sock;
+	FILE *data = 0;
 	struct sockaddr_in server;
 	struct hostent *hp;
 	char buf[BUFFER_LENGTH];
@@ -29,8 +30,11 @@ main(argc, argv)  int argc; char *argv[];
 	WSADATA wsadata;
 	WORD version = (1 << 8) + 1;  /* Version 1.1 */
 	
-
-
+	
+	data=fopen("TextSent.txt", "w+");
+	fscanf(data, buf);
+	
+	
 	if (argc != 1)
 	{	fprintf(stderr,"%s manque d'arguments\n", argv[0]);
 		exit(1);
@@ -79,8 +83,14 @@ main(argc, argv)  int argc; char *argv[];
 		}
 	}
 
+
+	sendto(s, buf, BUFFER_LENGTH, 0,
+		(struct sockaddr *)&server, sizeof(server));
+
+
 	/*  A faire: Fermeture de socket  */
 	closesocket(s);
+	fclose(data);
 	/*  A faire: Terminaison de winsock  */
 	WSACleanup();
 	return 0;

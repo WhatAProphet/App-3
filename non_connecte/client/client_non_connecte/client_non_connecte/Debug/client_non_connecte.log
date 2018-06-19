@@ -1,3 +1,1 @@
-﻿  SocketClientNonConnecte.c
-d:\documents\github\app-3\non_connecte\client\socketclientnonconnecte.c(46): warning C4013: 'gets' non défini(e) ; extern retournant int pris par défaut
-  client_non_connecte.vcxproj -> D:\Documents\GitHub\App-3\non_connecte\client\client_non_connecte\Debug\client_non_connecte.exe
+﻿  client_non_connecte.vcxproj -> C:\Users\casto\OneDrive - USherbrooke\Sherbrooke\S3\App 3\Code des programme\App-3\non_connecte\client\client_non_connecte\Debug\client_non_connecte.exe
