@@ -43,15 +43,7 @@ main(argc, argv)  int argc; char *argv[];
 
 	printf("Entrer le nom du fichier a envoyer: ");
 	gets_s(filename, TEXT_LENGHT);
-	data_read = fopen(filename, "r+");
-	if (data_read == NULL) {
-		perror("Erreur lors de la lecture du fichier");
-	}
-	while (!feof(data_read)) {
-		fgets(text, BUFFER_LENGTH, data_read);
-	}
-	printf("Texte envoyer: %s\n", text);
-	fclose(data_read);
+	
 
 	/*  A faire: initialisation de Winsock */
 	
@@ -86,7 +78,7 @@ main(argc, argv)  int argc; char *argv[];
 	
     /*  A faire: connection au serveur  */
 
-	connect(s, (struct sockaddr *)&server, TEXT_LENGHT);
+	connect(s, (struct sockaddr *)&server, sizeof(server));
 	
 	len = strlen(text);
 	if (len == 0)  {
@@ -96,8 +88,21 @@ main(argc, argv)  int argc; char *argv[];
 		}
 	}
 	send(s, filename, sizeof(filename),0);
-	send(s, text, sizeof(text), 0);
+
+	data_read = fopen(filename, "r+");
+	if (data_read == NULL) {
+		perror("Erreur lors de la lecture du fichier");
+	}
+	while (!feof(data_read)){
+		fgets(text, TEXT_LENGHT, data_read);
+	}
+	
 	printf("\nText sent = %s\n", text);
+	send(s, text, sizeof(text), 0);
+	fclose(data_read);
+
+	
+	
 
 
 	/*  A faire: Fermeture de socket  */
