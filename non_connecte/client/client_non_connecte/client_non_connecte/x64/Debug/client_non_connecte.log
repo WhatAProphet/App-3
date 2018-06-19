@@ -1,15 +1,6 @@
 ﻿  SocketClientNonConnecte.c
 d:\documents\github\app-3\non_connecte\client\socketclientnonconnecte.c(42): warning C4244: '=' : conversion de 'SOCKET' en 'int', perte possible de données
 d:\documents\github\app-3\non_connecte\client\socketclientnonconnecte.c(52): warning C4013: 'gets' non défini(e) ; extern retournant int pris par défaut
-d:\documents\github\app-3\non_connecte\client\socketclientnonconnecte.c(78): warning C4267: 'fonction' : conversion de 'size_t' en 'int', perte possible de données
-d:\documents\github\app-3\non_connecte\client\socketclientnonconnecte.c(131): warning C4047: '=' : les niveaux d'indirection de 'FILE *' et de 'errno_t' sont différents
-d:\documents\github\app-3\non_connecte\client\socketclientnonconnecte.c(139): warning C4047: '==' : les niveaux d'indirection de 'char *[1024]' et de 'int' sont différents
-d:\documents\github\app-3\non_connecte\client\socketclientnonconnecte.c(147): warning C4047: 'fonction' : les niveaux d'indirection de 'const char *' et de 'char *[1024]' sont différents
-d:\documents\github\app-3\non_connecte\client\socketclientnonconnecte.c(147): warning C4024: 'send' : types différents pour le paramètre formel et réel 2
-d:\documents\github\app-3\non_connecte\client\socketclientnonconnecte.c(138): warning C4477: 'fscanf_s' : la chaîne de format '%s' nécessite un argument de type 'char *', mais l'argument variadique 1 est de type 'char **'
-  d:\documents\github\app-3\non_connecte\client\socketclientnonconnecte.c(138): note: cet argument est utilisé par un spécificateur de conversion
-d:\documents\github\app-3\non_connecte\client\socketclientnonconnecte.c(138): warning C4473: 'fscanf_s' : nombre insuffisant d'arguments passés pour la chaîne de format
-  d:\documents\github\app-3\non_connecte\client\socketclientnonconnecte.c(138): note: les espaces réservés et leurs paramètres attendent des arguments 2 variadiques, mais des arguments 1 ont été fournis
-  d:\documents\github\app-3\non_connecte\client\socketclientnonconnecte.c(138): note: l'argument variadique manquant 2 est demandé par la chaîne de format '%s'
-  d:\documents\github\app-3\non_connecte\client\socketclientnonconnecte.c(138): note: cet argument est utilisé comme taille de mémoire tampon
+d:\documents\github\app-3\non_connecte\client\socketclientnonconnecte.c(66): warning C4101: 'n' : variable locale non référencée
+d:\documents\github\app-3\non_connecte\client\socketclientnonconnecte.c(22): warning C4101: 'buffer' : variable locale non référencée
   client_non_connecte.vcxproj -> D:\Documents\GitHub\App-3\non_connecte\client\client_non_connecte\x64\Debug\client_non_connecte.exe
