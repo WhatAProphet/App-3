@@ -2,13 +2,10 @@
 #include <string.h>
 #include <sys/types.h>
 #include <winsock.h>
-#include <time.h>
  
 #define BUFFER_LENGTH  1024
 
 #pragma comment(lib, "Ws2_32.lib")
-
-void delay(int milliseconds);
 
 main(argc, argv)  int argc; char *argv[];
 {
@@ -17,10 +14,9 @@ main(argc, argv)  int argc; char *argv[];
 	 int                  countByteSent=0;
 	 struct sockaddr_in   ReceiverAddr, SrcInfo;
 	 struct hostent		  *hp;
-     char                 *SendBuf = "Bonjour!Terre appelle Mars!";
+     char                 SendBuf[BUFFER_LENGTH]="Bonjour";
 	 char				  buf[BUFFER_LENGTH];
-	 char                 buffer[BUFFER_LENGTH];
-	 char                 *filePath = "test.txt";
+	 char                 fileName[BUFFER_LENGTH];
      int len;
      int TotalByteSent;
  
@@ -30,7 +26,7 @@ main(argc, argv)  int argc; char *argv[];
 	 exit(1);
 	 }
 	 WORD version = (1 << 8) + 1;  /* Version 1.1 de WINSOCK*/
-	 /*  ???? Indiquer quelle opération on effectue ici????? */
+	 //  Vérifie les données des sockets liés à l'ordinateur et initie le programme pour utiliser Windows Sockets DLL
 	 if (WSAStartup(version, &wsaData) != 0)
 	 {
 		 perror("lors de l'initialisation du socket");
@@ -61,9 +57,7 @@ main(argc, argv)  int argc; char *argv[];
 	 gets(buf);
 	 ReceiverAddr.sin_port = htons((short)atoi(buf)); /*?????????????????????*/
 
-	 char fileName[BUFFER_LENGTH], fileContent[BUFFER_LENGTH];
 	 FILE *file;
-	 int n;
 	 while (1)
 	 {
 		 printf("\nVeuillez entrer le nom du fichier: ");
@@ -71,16 +65,18 @@ main(argc, argv)  int argc; char *argv[];
 		 file = fopen(fileName, "rb");
 		 if (file != NULL)
 		 {
-			 TotalByteSent = sendto(SendingSocket, fileName, BUFFER_LENGTH, 0,
+			 TotalByteSent = sendto(SendingSocket, fileName, sizeof(fileName), 0,
 				 (struct sockaddr *)&ReceiverAddr, sizeof(ReceiverAddr));
 			 printf("\nLe contenu du fichier sera imprime");
-			 while (!feof(file)) {
-				 fgets(fileContent, BUFFER_LENGTH, file);
-				 printf("%s\n", fileContent);
-				 TotalByteSent = sendto(SendingSocket, fileContent, BUFFER_LENGTH, 0,
+			 while (!feof(file))
+			 {
+				 fread(SendBuf, BUFFER_LENGTH, 1, file);
+				 TotalByteSent = sendto(SendingSocket, SendBuf, sizeof(SendBuf), 0,
 					 (struct sockaddr *)&ReceiverAddr, sizeof(ReceiverAddr));
-				 countByteSent += TotalByteSent;
-			}
+				 printf("Nombre de bytes envoyes: %d\n", TotalByteSent);
+				 Sleep(3);
+			 } 
+			 printf("\nFinal size: %d\n", totalBytesInFile);
 			 fclose(file);
 			 break;
 		 }
@@ -90,13 +86,14 @@ main(argc, argv)  int argc; char *argv[];
 		 }
 		 
 	 }
+	 closesocket(SendingSocket);
 	 
  
 	 // ?????????????????????????????????????????????
      /*printf("Client: les donnees a envoyer : \"%s\"\n", SendBuf);
      printf("Client: entrain d'envoyer...\n");
 	 TotalByteSent = sendto(SendingSocket, SendBuf, BUFFER_LENGTH, 0,
-		 (struct sockaddr *)&ReceiverAddr, sizeof(ReceiverAddr))*/;
+		 (struct sockaddr *)&ReceiverAddr, sizeof(ReceiverAddr));*/
 
  
 	 // ?????????????????????????????????????????????
@@ -111,25 +108,12 @@ main(argc, argv)  int argc; char *argv[];
 	 getpeername(SendingSocket, (struct sockaddr *)&ReceiverAddr, (int *)sizeof(ReceiverAddr));
      printf("Client: adresse IP du serveur: %s\n", inet_ntoa(ReceiverAddr.sin_addr));
      printf("Client: port du serveur: %d\n", htons(ReceiverAddr.sin_port));
-     printf("Client: total de bytes envoyes: %d\n", countByteSent);
  
 	 // ?????????????????????????????????????????????
 	
-	 closesocket(SendingSocket);
+	 
 	// ?????????????????????????????????????????????
 	WSACleanup();
 	// Back to the system
 	return 0;
-}
-
-
-void delay(int milliseconds)
-{
-	long pause;
-	clock_t now, then;
-
-	pause = milliseconds * (CLOCKS_PER_SEC / 1000);
-	now = then = clock();
-	while ((now - then) < pause)
-		now = clock();
 }
