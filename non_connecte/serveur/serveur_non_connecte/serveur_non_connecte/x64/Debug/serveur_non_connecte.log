@@ -1,5 +1,4 @@
 ﻿  SocketServeurNonConnecte.c
 d:\documents\github\app-3\non_connecte\serveur\socketserveurnonconnecte.c(44): warning C4244: '=' : conversion de 'SOCKET' en 'int', perte possible de données
-d:\documents\github\app-3\non_connecte\serveur\socketserveurnonconnecte.c(84): warning C4101: 'sendbuf' : variable locale non référencée
 d:\documents\github\app-3\non_connecte\serveur\socketserveurnonconnecte.c(19): warning C4101: 'length' : variable locale non référencée
   serveur_non_connecte.vcxproj -> D:\Documents\GitHub\App-3\non_connecte\serveur\serveur_non_connecte\x64\Debug\serveur_non_connecte.exe
