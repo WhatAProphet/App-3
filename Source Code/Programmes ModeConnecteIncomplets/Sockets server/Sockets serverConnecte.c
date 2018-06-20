@@ -113,13 +113,19 @@ char *argv[];
 			{	
 				//buf[rval-1] = END_OF_STRING;
 				printf("Nom du fichier recu: '%s'\n", buf);
-				data = fopen(buf, "w+");//Ouvre un fichier avec le nom recu
+				data = fopen(buf, "wb");//Ouvre un fichier avec le nom recu
 
-				rval =  recv(msgsock, content, sizeof(content),0);
-				content[0] = ' ';
+				while (rval != 0){
+					rval = recv(msgsock, content, sizeof(content), 0);
+					printf("Nobre de bytes envoyes: %d\n", rval);
+					fwrite(content, BUFFER_LENGTH, 1, data);
+					Sleep(3);
+			}
+				
+				
 				printf("Contenu du fichier recu: '%s'\n", content);//Imprime le message recu à l'écran
 				
-				fprintf(data, "%s", content);//imprime le message dans le fichier
+				//fprintf(data, "%s", content);//imprime le message dans le fichier
 				
 				printf("Entrer les caracteres+retour de chariot pour envoyer, ou juste retour de chariot pour terminer:\n ");
 				gets_s(buf, BUFFER_LENGTH);

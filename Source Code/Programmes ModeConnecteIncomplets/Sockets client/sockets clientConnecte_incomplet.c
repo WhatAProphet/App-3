@@ -89,16 +89,19 @@ main(argc, argv)  int argc; char *argv[];
 	}
 	send(s, filename, sizeof(filename),0);
 
-	data_read = fopen(filename, "r+");
+	data_read = fopen(filename, "rb");
 	if (data_read == NULL) {
 		perror("Erreur lors de la lecture du fichier");
 	}
 	while (!feof(data_read)){
-		fgets(text, TEXT_LENGHT, data_read);
+		//fgets(text, TEXT_LENGHT, data_read);
+		fread(text, BUFFER_LENGTH, 1, data_read);
+		send(s, text, sizeof(text), 0);
+		Sleep(3);
 	}
 	
 	printf("\nText sent = %s\n", text);
-	send(s, text, sizeof(text), 0);
+	
 	fclose(data_read);
 
 	
